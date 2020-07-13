@@ -47,13 +47,19 @@ module TextlabOBTStat
     def platform
       if @platform.nil?
         host_os = RbConfig::CONFIG['host_os']
+        host_cpu = RbConfig::CONFIG['host_cpu']
 
         @platform =
             case host_os
               when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
                 :windows
               when /darwin|mac os/
-                :osx
+                case host_cpu
+                  when /x86_64/
+                    :osx64
+                  else
+                    :osx32
+                end
               when /linux/
                 :linux
               when /solaris|bsd/
@@ -70,9 +76,12 @@ module TextlabOBTStat
     # @private
     def get_hunpos_command
       case platform
-        when :osx
+        when :osx64
           return File.join(TextlabOBTStat.root_path,
-                           "hunpos", "hunpos-1.0-macosx", "hunpos-tag")
+                           "hunpos", "hunpos-1.0-macosx64", "hunpos-tag")
+        when :osx32
+          return File.join(TextlabOBTStat.root_path,
+                           "hunpos", "hunpos-1.0-macosx32", "hunpos-tag")
         when :linux
           return File.join(TextlabOBTStat.root_path,
                            "hunpos", "hunpos-1.0-linux", "hunpos-tag")

@@ -36,7 +36,7 @@ for i in 0 1 2 3 4 5 6 7 8 9; do
 		# iconv -f iso-8859-1 -t utf-8 | tr '[A-ZÆØÅ]' '[a-zæøå]' | iconv -f utf-8 -t iso-8859-1 | \
 		iconv -f iso-8859-1 -t utf-8 | 	perl -p -e 'tr/[A-ZÆØÅ]/[a-zæøå]/' | iconv -f utf-8 -t iso-8859-1 | \
 
-		hunpos-1.0-macosx/hunpos-train ${path}/${i}/${hunpos_model_file}
+		hunpos-1.0-macosx64/hunpos-train ${path}/${i}/${hunpos_model_file}
 
 		echo "Creating Lemma model"
 		ruby create_lemma_model.rb < ${path}/${cor_file} > ${path}/${i}/${lemma_model_file}
